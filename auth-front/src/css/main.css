@@ -97,3 +97,7 @@ form {
   gap: 4px;
   padding: 3px;
 }
+input {
+  padding: 1px 5px;
+  color: rgb(28, 28, 28)
+}
