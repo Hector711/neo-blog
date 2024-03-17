@@ -1,14 +1,14 @@
 {
-  "name": "auth-back",
+  "name": "neo-back",
   "version": "1.0.0",
-  "description": "",
-  "main": "index.js",
+  "description": "Neo-blog backend",
+  "main": "app.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
     "dev": "node --watch app.js"
   },
   "keywords": [],
-  "author": "",
+  "author": "Héctor",
   "license": "ISC",
   "dependencies": {
     "bcrypt": "^5.1.1",
