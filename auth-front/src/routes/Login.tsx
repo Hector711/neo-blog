@@ -22,20 +22,22 @@ export default function Login() {
         <label htmlFor="username">Username: </label>
         <input
           type="text"
-          title="username"
+          id="username"
           value={username}
+          autoComplete="username"
           onChange={(e) => setUsername(e.target.value)}
         />
 
         <label htmlFor="password">Password: </label>
         <input
           type="password"
-          title="password"
+          id="password"
+          autoComplete="current-password"
           value={password}
           onChange={(e) => setPassword(e.target.value)}
         />
 
-        <button type="button">Log In</button>
+        <button type="submit">Log In</button>
       </form>
     </DefaultLayout>
   );
