@@ -10,9 +10,9 @@
 
 html,
 body {
-  background-color: #1c1c1e;
+  background-color: var(--black);
   height: 100%;
-  color: #cdcdcd;
+  color: var(--white);
 }
 
 html {
@@ -29,6 +29,8 @@ body {
 
 main {
   display: flex;
+  flex-direction: column;
+  gap:3rem;
   justify-content: center;
   align-items: center;
 
@@ -71,6 +73,13 @@ p {
 ol,
 ul {
   list-style: none;
+}
+
+h1, h2, h3 {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100%;
 }
 
 

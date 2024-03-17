@@ -10,10 +10,10 @@ export default function DefaultLayout( {children} : DefaultLayoutProps ) {
         <nav className="flex justify-center items-center w-[100%] p-[1rem]">
           <ul className="flex gap-[2rem] max-w-[900px] w-[100%]">
             <li>
-              <Link to="/">Home</Link>
+              <Link to="/"><h1>NEO</h1></Link>
             </li>
             <li>
-              <Link to="/signup">Sign Up</Link>
+              {/* <Link to="/signup"><h2>Sign Up</h2></Link> */}
             </li>
           </ul>
         </nav>

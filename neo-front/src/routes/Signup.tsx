@@ -1,14 +1,17 @@
-import { Navigate } from "react-router-dom";
+import { Navigate, useNavigate } from "react-router-dom";
 import DefaultLayout from "../layout/DefaultLayout";
 import { useState } from "react";
 import { useAuth } from "../auth/AuthProvider";
 import { API_URL } from "../auth/constants";
+import { AuthResponseError } from "src/types/types";
 
 export default function Signup() {
   const [name, setName] = useState("");
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
+  const [errorResponse, setErrorResponse] = useState("")
   const Auth = useAuth();
+  const goTo = useNavigate();
 
   async function handleSubmit(e: React.FormEvent<HTMLFormElement>) {
     e.preventDefault();
@@ -21,14 +24,19 @@ export default function Signup() {
         body: JSON.stringify({ name, username, password }),
       });
 
+      const json = (await response.json()) as AuthResponseError;
+
       if (response.ok) {
         console.log("User created successfully");
+        goTo( "/" );
       } else {
-        console.log("Something went wrong 1");
+        setErrorResponse(json.body.error || "Error desconocido");
+        console.log("json:", json);
+        return 
       }
     } catch (error) {
       console.log(error);
-      alert("Something went wrong 2");
+      alert("Fetch went wrong");
     }
   }
 
@@ -41,6 +49,8 @@ export default function Signup() {
     <DefaultLayout>
       <form className="form" onSubmit={handleSubmit}>
         <h1 className="flex justify-center">Sign Up</h1>
+        { errorResponse && <div className="errorMessage">{errorResponse}</div> }
+
         <label htmlFor="name">Name: </label>
         <input
           type="text"
