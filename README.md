@@ -1,30 +1,26 @@
-# React + TypeScript + Vite
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+# NEO Blog
 
-Currently, two official plugins are available:
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react/README.md) uses [Babel](https://babeljs.io/) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+¡Bienvenido al fascinante mundo de NEO Blog!
 
-## Expanding the ESLint configuration
 
-If you are developing a production application, we recommend updating the configuration to enable type aware lint rules:
 
-- Configure the top-level `parserOptions` property like this:
 
-```js
-export default {
-  // other rules...
-  parserOptions: {
-    ecmaVersion: 'latest',
-    sourceType: 'module',
-    project: ['./tsconfig.json', './tsconfig.node.json'],
-    tsconfigRootDir: __dirname,
-  },
-}
-```
 
-- Replace `plugin:@typescript-eslint/recommended` to `plugin:@typescript-eslint/recommended-type-checked` or `plugin:@typescript-eslint/strict-type-checked`
-- Optionally add `plugin:@typescript-eslint/stylistic-type-checked`
-- Install [eslint-plugin-react](https://github.com/jsx-eslint/eslint-plugin-react) and add `plugin:react/recommended` & `plugin:react/jsx-runtime` to the `extends` list
+
+## Descripción
+
+NEO Blog es más que solo un lugar para compartir ideas; es un rincón virtual donde las palabras cobran vida y las ideas florecen. Inspirado por la pasión por la escritura y el deseo de conectar con una comunidad vibrante, NEO Blog es el hogar de historias cautivadoras, reflexiones profundas y debates enriquecedores.
+
+Interacción Sencilla: Comenta, comparte y conecta con otros lectores de manera intuitiva, fomentando la discusión y la colaboración en un entorno acogedor y respetuoso.
+Contribuir:
+
+## Authors
+
+Creador: [@hector711](https://www.github.com/hector711)
+
+Contacto: hectorluengo.xx@gmail.com
+
+## 🛠 Skills
+Javascript, HTML, CSS, React, Tailwind, NodeJS
