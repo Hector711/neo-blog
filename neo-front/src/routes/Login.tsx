@@ -4,6 +4,7 @@ import { useState } from "react";
 import { Navigate, useNavigate } from "react-router-dom";
 import { Link } from "react-router-dom";
 import { API_URL } from "../auth/constants";
+import { AuthResponse } from "src/types/types";
 // import { AuthResponseError } from "src/types/types"
 
 export default function Login() {
@@ -25,10 +26,16 @@ export default function Login() {
       });
 
       const json = await response.json();
+      // const json = (await response.json()) as AuthResponse;
 
       if (response.ok) {
         console.log("Log in successfully");
-        goTo( "/" );
+        setErrorResponse("");
+        if(json.body.accessToken && json.body.refreshToken){
+          Auth.saveUser(json);
+          goTo( "/dashboard" );
+        }
+
       } else {
         setErrorResponse(json.body.error || "Error desconocido");
         console.log("json:", json);
