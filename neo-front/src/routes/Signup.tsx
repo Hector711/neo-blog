@@ -41,6 +41,8 @@ export default function Signup() {
   }
 
   if (Auth.isAuthenticated) {
+    goTo( "/dashboard" );
+
     return <Navigate to="/dashboard" />;
   }
 

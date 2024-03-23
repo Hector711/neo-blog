@@ -2,25 +2,27 @@ import { useContext, createContext, useState, useEffect } from "react";
 import type { AuthResponse, AccessTokenResponse, User } from "src/types/types";
 import { API_URL } from "./constants";
 
-interface AuthProviderProps {
-  children: React.ReactNode;
-}
-
-// export
 const AuthContext = createContext({
   isAuthenticated: false,
   getAccessToken: () => {},
   saveUser: (userData: AuthResponse) => {},
   getRefreshToken: () => {},
+  getUser: () => ({} as User | undefined),
 });
+
+interface AuthProviderProps {
+  children: React.ReactNode;
+}
 
 export function AuthProvider({ children }: AuthProviderProps) {
   const [isAuthenticated, setIsAuthenticated] = useState(false);
   const [accessToken, setAccessToken] = useState<string>("");
-  const [refreshToken, setRefreshToken] = useState<string>("");
+  // const [refreshToken, setRefreshToken] = useState<string>("");
   const [user, setUser] = useState<User>();
 
-  useEffect(() => {}, []);
+  useEffect(() => {
+    checkAuth();
+  }, []);
 
   async function requestNewAccessToken(refreshToken: string) {
     try {
@@ -62,7 +64,7 @@ export function AuthProvider({ children }: AuthProviderProps) {
         if (json.error) {
           throw new Error(json.error);
         }
-        return json;
+        return json.body;
       } else {
         throw new Error(response.statusText);
       }
@@ -73,6 +75,29 @@ export function AuthProvider({ children }: AuthProviderProps) {
   }
 
   async function checkAuth() {
+    // Verificar si hay datos almacenados en localStorage
+    const storedAccessToken = localStorage.getItem("accessToken");
+    const storedUser = localStorage.getItem("user");
+    const storedRefreshToken = localStorage.getItem("refreshToken");
+    if (storedAccessToken && storedUser && storedRefreshToken) {
+      // Restablecer el estado con los datos almacenados
+      setAccessToken(storedAccessToken);
+      setUser(JSON.parse(storedUser));
+      setIsAuthenticated(true);
+    } else {
+      // Si no hay datos almacenados, intentar renovar el token de acceso
+      const token = getRefreshToken();
+      if (token) {
+        const newAccessToken = await requestNewAccessToken(token);
+        if (newAccessToken) {
+          const userInfo = await getUserInfo(newAccessToken);
+          if (userInfo) {
+            saveSessionInfo(userInfo, newAccessToken, token);
+          }
+        }
+      }
+    }
+
     if (accessToken) {
     } else {
       const token = getRefreshToken();
@@ -81,18 +106,27 @@ export function AuthProvider({ children }: AuthProviderProps) {
         if (newAccessToken) {
           const userInfo = await getUserInfo(newAccessToken);
           if (userInfo) {
-            saveSessionInfo(userInfo, newAccessToken, token)
+            saveSessionInfo(userInfo, newAccessToken, token);
           }
         }
       }
     }
   }
-
+  
   function saveSessionInfo(
     userInfo: User,
-    accesToken: string,
+    accessToken: string,
     refreshToken: string
   ) {
+    // setAccessToken(accessToken);
+    // setUser(userInfo);
+    // setIsAuthenticated(true);
+
+    // // Almacenar datos en localStorage
+    // localStorage.setItem("accessToken", accessToken);
+    // localStorage.setItem("user", JSON.stringify(userInfo));
+    // localStorage.setItem("refreshToken", refreshToken);
+
     setAccessToken(accessToken);
     // setUser(userData.body.user)
     // setRefreshToken(userData.body.refreshToken);
@@ -104,11 +138,12 @@ export function AuthProvider({ children }: AuthProviderProps) {
   function getAccessToken() {
     return accessToken;
   }
+
   function getRefreshToken(): string | null {
-    const token = localStorage.getItem("token");
-    if (token) {
-      const { refreshToken } = JSON.parse(token);
-      return refreshToken;
+    const tokenData = localStorage.getItem("token");
+    if (tokenData) {
+      const { token } = JSON.parse(tokenData);
+      return token;
     }
     return null;
   }
@@ -121,9 +156,19 @@ export function AuthProvider({ children }: AuthProviderProps) {
     );
   }
 
+  function getUser() {
+    return user;
+  }
+
   return (
     <AuthContext.Provider
-      value={{ isAuthenticated, getAccessToken, saveUser, getRefreshToken }}
+      value={{
+        isAuthenticated,
+        getAccessToken,
+        saveUser,
+        getRefreshToken,
+        getUser,
+      }}
     >
       {children}
     </AuthContext.Provider>

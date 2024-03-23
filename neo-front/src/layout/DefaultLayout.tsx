@@ -13,7 +13,18 @@ export default function DefaultLayout( {children} : DefaultLayoutProps ) {
               <Link to="/"><h1>NEO</h1></Link>
             </li>
             <li>
+              <Link to="/"><h2>Profiles</h2></Link>
+            </li>
+            <li>
+              <Link to="/"><h2>Explore</h2></Link>
+            </li>
+            <li>
               {/* <Link to="/signup"><h2>Sign Up</h2></Link> */}
+            </li>
+          </ul>
+          <ul>
+            <li>
+              <Link to="/"><h2>My Profile</h2></Link>
             </li>
           </ul>
         </nav>
