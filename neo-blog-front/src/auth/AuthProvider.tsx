@@ -5,7 +5,7 @@ import { API_URL } from "./constants";
 const AuthContext = createContext({
   isAuthenticated: false,
   getAccessToken: () => {},
-  saveUser: (userData: AuthResponse) => {},
+  saveUser: (_userData: AuthResponse) => {},
   getRefreshToken: () => {},
   getUser: () => ({} as User | undefined),
 });
@@ -51,6 +51,9 @@ export function AuthProvider({ children }: AuthProviderProps) {
 
   async function getUserInfo(accessToken: string) {
     try {
+      if (!accessToken) {
+        throw new Error ("Token no proporcionado")
+      }
       const response = await fetch(`${API_URL}/user`, {
         method: "GET",
         headers: {
@@ -66,7 +69,7 @@ export function AuthProvider({ children }: AuthProviderProps) {
         }
         return json.body;
       } else {
-        throw new Error(response.statusText);
+        throw new Error(`Error en la solicitud: ${response.statusText}`);
       }
     } catch (error) {
       console.log(error);
