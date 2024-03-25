@@ -4,7 +4,7 @@ import "./css/main.css";
 import { createBrowserRouter, RouterProvider } from "react-router-dom";
 import Login from "./routes/Login.tsx";
 import Signup from "./routes/Signup.tsx";
-import Dashboard from "./routes/MyProfile.tsx";
+import Dashboard from "./routes/Dashboard.tsx";
 import ProtectedRoute from "./routes/ProtectedRoute.tsx";
 import { AuthProvider } from "./auth/AuthProvider.tsx";
 

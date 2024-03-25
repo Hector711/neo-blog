@@ -38,7 +38,7 @@ export default function Login() {
 
       } else {
         setErrorResponse(json.body.error || "Error desconocido");
-        console.log("json:", json);
+        // console.log("json:", json);
         return 
       }
     } catch (error) {
@@ -46,7 +46,6 @@ export default function Login() {
       alert("Fetch went wrong");
     }
   }
-
 
   if(Auth.isAuthenticated) {
     return <Navigate to="/dashboard" />
@@ -60,7 +59,7 @@ export default function Login() {
         onSubmit={handleSubmit}
       >
         <h1 className="flex justify-center">Log In</h1>
-        { errorResponse && <div className="errorResponse">{errorResponse}</div>}
+        { errorResponse && <div className="errorResponse">{errorResponse}</div> }
         <label htmlFor="username">Username: </label>
         <input
           type="text"
